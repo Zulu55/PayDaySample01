@@ -1,18 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
-using PayDaySample01.Domain.Models;
-using PayDaySample01.Web.Models;
-using PayDaySample01.Web.Helpers;
-
-namespace PayDaySample01.Web.Controllers
+﻿namespace PayDaySample01.Web.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Data.Entity;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using System.Net;
+    using System.Web;
+    using System.Web.Mvc;
+    using Domain.Models;
+    using Models;
+    using Helpers;
+
     public class EmployeesController : Controller
     {
         private LocalDataContext db = new LocalDataContext();
@@ -43,6 +43,7 @@ namespace PayDaySample01.Web.Controllers
         }
 
         // GET: Employees/Create
+        [Authorize(Users = "jzuluaga55@gmail.com")]
         public ActionResult Create()
         {
             ViewBag.CityId = new SelectList(db.Cities.OrderBy(c => c.Name), "CityId", "Name");
@@ -92,6 +93,7 @@ namespace PayDaySample01.Web.Controllers
         }
 
         // GET: Employees/Edit/5
+        [Authorize]
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
@@ -154,26 +156,21 @@ namespace PayDaySample01.Web.Controllers
         }
 
         // GET: Employees/Delete/5
+        [Authorize]
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Employee employee = await db.Employees.FindAsync(id);
+
+            var employee = await db.Employees.FindAsync(id);
+
             if (employee == null)
             {
                 return HttpNotFound();
             }
-            return View(employee);
-        }
 
-        // POST: Employees/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
-        {
-            Employee employee = await db.Employees.FindAsync(id);
             db.Employees.Remove(employee);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");

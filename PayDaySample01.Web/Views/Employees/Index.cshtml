@@ -70,7 +70,7 @@
         <td>
             @Html.ActionLink("Editar", "Edit", new { id=item.EmployeeId }, new { @class = "btn btn-warning" })
             @Html.ActionLink("Detalles", "Details", new { id=item.EmployeeId }, new { @class = "btn btn-info" })
-            @Html.ActionLink("Borrar", "Delete", new { id=item.EmployeeId }, new { @class = "btn btn-danger" })
+            @Html.ActionLink("Borrar", "Delete", new { id=item.EmployeeId }, new { @class = "btn btn-danger", onclick = "return confirm('¿Está seguro de borrar el registro?')" })
         </td>
     </tr>
 }

@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Web;
-
-namespace PayDaySample01.Web.Helpers
+﻿namespace PayDaySample01.Web.Helpers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Web;
+
     public static class FilesHelper
     {
         public static string UploadPhoto(HttpPostedFileBase file, string folder)
