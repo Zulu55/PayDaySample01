@@ -1,0 +1,75 @@
+﻿@model IEnumerable<PayDaySample01.Domain.Models.User>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Usuarios</h2>
+
+<p>
+    @Html.ActionLink("Nuevo", "Create", new { }, new { @class = "btn btn-primary" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsAdmin)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CanView)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CanEdit)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CanCreate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CanDelete)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsAdmin)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CanView)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CanEdit)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CanCreate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CanDelete)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { id=item.UserId }, new { @class = "btn btn-warning" })
+            @Html.ActionLink("Detalles", "Details", new { id=item.UserId }, new { @class = "btn btn-info" })
+            @Html.ActionLink("Borrar", "Delete", new { id=item.UserId }, new { @class = "btn btn-danger" })
+        </td>
+    </tr>
+}
+
+</table>

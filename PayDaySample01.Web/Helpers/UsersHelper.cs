@@ -67,7 +67,7 @@
             }
         }
 
-        private static void AddRoleToUser(string email, string role)
+        public static void AddRoleToUser(string email, string role)
         {
             var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(userContext));
             var userASP = userManager.FindByEmail(email);
@@ -79,25 +79,7 @@
             userManager.AddToRole(userASP.Id, role);
         }
 
-        public static void CreateUserASP(string email, string roleName)
-        {
-            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(userContext));
-            var userASP = userManager.FindByEmail(email);
-            if (userASP == null)
-            {
-                userASP = new ApplicationUser
-                {
-                    Email = email,
-                    UserName = email,
-                };
-
-                userManager.Create(userASP, email);
-            }
-
-            userManager.AddToRole(userASP.Id, roleName);
-        }
-
-        public static void CreateUserASP(string email, string roleName, string password)
+        public static bool CreateUserASP(string email, string roleName, string password)
         {
             var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(userContext));
 
@@ -112,6 +94,22 @@
             {
                 userManager.AddToRole(userASP.Id, roleName);
             }
+
+            return result.Succeeded;
+        }
+
+        public static bool CreateUserASP(string email, string password)
+        {
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(userContext));
+
+            var userASP = new ApplicationUser
+            {
+                Email = email,
+                UserName = email,
+            };
+
+            var result = userManager.Create(userASP, password);
+            return result.Succeeded;
         }
 
         public void Dispose()

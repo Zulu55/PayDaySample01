@@ -17,6 +17,7 @@ namespace PayDaySample01.Web.Controllers
         private LocalDataContext db = new LocalDataContext();
 
         // GET: Cities
+        [Authorize(Roles = "View")]
         public async Task<ActionResult> Index()
         {
             return View(await db.Cities.OrderBy(c => c.Name).ToListAsync());

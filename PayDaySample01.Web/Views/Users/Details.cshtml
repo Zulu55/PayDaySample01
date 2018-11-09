@@ -1,0 +1,82 @@
+﻿@model PayDaySample01.Domain.Models.User
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>User</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsAdmin)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsAdmin)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CanView)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CanView)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CanEdit)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CanEdit)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CanCreate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CanCreate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CanDelete)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CanDelete)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.UserId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
