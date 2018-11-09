@@ -59,8 +59,24 @@
             if (userASP == null)
             {
                 CreateUserASP(email, "Admin", password);
+                AddRoleToUser(email, "View");
+                AddRoleToUser(email, "Create");
+                AddRoleToUser(email, "Edit");
+                AddRoleToUser(email, "Delete");
                 return;
             }
+        }
+
+        private static void AddRoleToUser(string email, string role)
+        {
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(userContext));
+            var userASP = userManager.FindByEmail(email);
+            if (userASP == null)
+            {
+                return;
+            }
+
+            userManager.AddToRole(userASP.Id, role);
         }
 
         public static void CreateUserASP(string email, string roleName)

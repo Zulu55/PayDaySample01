@@ -18,6 +18,7 @@
         private LocalDataContext db = new LocalDataContext();
 
         // GET: Employees
+        [Authorize(Roles = "View, Admin")]
         public async Task<ActionResult> Index()
         {
             var employees = db.Employees.Include(e => e.City);
@@ -25,6 +26,7 @@
         }
 
         // GET: Employees/Details/5
+        [Authorize(Roles = "View, Admin")]
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
@@ -43,7 +45,7 @@
         }
 
         // GET: Employees/Create
-        [Authorize(Users = "jzuluaga55@gmail.com")]
+        [Authorize(Roles = "Create, Admin")]
         public ActionResult Create()
         {
             ViewBag.CityId = new SelectList(db.Cities.OrderBy(c => c.Name), "CityId", "Name");
@@ -93,7 +95,7 @@
         }
 
         // GET: Employees/Edit/5
-        [Authorize]
+        [Authorize(Roles = "Edit, Admin")]
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
@@ -156,7 +158,7 @@
         }
 
         // GET: Employees/Delete/5
-        [Authorize]
+        [Authorize(Roles = "Delete, Admin")]
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
