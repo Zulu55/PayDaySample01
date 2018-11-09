@@ -1,0 +1,33 @@
+﻿@model IEnumerable<PayDaySample01.Domain.Models.City>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Ciudades</h2>
+
+<p>
+    @Html.ActionLink("Nuevo", "Create", new { }, new { @class = "btn btn-primary" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { id = item.CityId }, new { @class = "btn btn-warning" })
+            @Html.ActionLink("Detalles", "Details", new { id = item.CityId }, new { @class = "btn btn-info" })
+            @Html.ActionLink("Borrar", "Delete", new { id = item.CityId }, new { @class = "btn btn-danger" })
+        </td>
+    </tr>
+}
+
+</table>
