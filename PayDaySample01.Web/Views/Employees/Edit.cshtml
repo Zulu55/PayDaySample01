@@ -1,4 +1,4 @@
-﻿@model PayDaySample01.Domain.Models.Employee
+﻿@model PayDaySample01.Web.Models.EmployeeView
 
 @{
     ViewBag.Title = "Edit";
@@ -6,9 +6,7 @@
 
 <h2>Editar</h2>
 
-
-
-@using (Html.BeginForm())
+@using (Html.BeginForm("Edit", "Employees", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
@@ -20,6 +18,7 @@
             <div class="form-horizontal">
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 @Html.HiddenFor(model => model.EmployeeId)
+                @Html.HiddenFor(model => model.PicturePath)
 
                 <div class="form-group">
                     @Html.LabelFor(model => model.Document, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -54,10 +53,11 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.PicturePath, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.PictureFile, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.PicturePath, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.PicturePath, "", new { @class = "text-danger" })
+                        <span class="btn btn-default btn-file">
+                            @Html.TextBoxFor(modelo => modelo.PictureFile, new { type = "file" })
+                        </span>
                     </div>
                 </div>
 
@@ -90,7 +90,7 @@
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
                         <input type="submit" value="Guardar" class="btn btn-primary" />
-                        @Html.ActionLink("Regresar", "Index", new { }, new { @class = "btn btn-success" } )
+                        @Html.ActionLink("Regresar", "Index", new { }, new { @class = "btn btn-success" })
 
                     </div>
                 </div>

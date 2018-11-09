@@ -4,10 +4,10 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>Detalles</h2>
 
 <div>
-    <h4>Employee</h4>
+    <h4>Empleado</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -43,11 +43,14 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Picture)
+            @Html.DisplayNameFor(model => model.PicturePath)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Picture)
+            @if (!string.IsNullOrEmpty(Model.PicturePath))
+            {
+                <img src="@Url.Content(Model.PicturePath)" alt="Image" style="width:300px;height:150px;max-width: 100%; height: auto;" />
+            }
         </dd>
 
         <dt>
@@ -77,6 +80,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.EmployeeId }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Editar", "Edit", new { id = Model.EmployeeId }, new { @class = "btn btn-warning" }) 
+    @Html.ActionLink("Regresar", "Index", new { }, new { @class = "btn btn-success" })
 </p>

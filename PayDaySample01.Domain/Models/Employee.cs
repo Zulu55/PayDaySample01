@@ -39,7 +39,7 @@ namespace PayDaySample01.Domain.Models
         public DateTime HireIn { get; set; }
 
         [Display(Name = "Salario")]
-        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
         public decimal Salary { get; set; }
 
         [Display(Name = "¿Tiene hijos?")]

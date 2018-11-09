@@ -31,11 +31,14 @@ namespace PayDaySample01.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Employee employee = await db.Employees.FindAsync(id);
+
+            var employee = await db.Employees.FindAsync(id);
+
             if (employee == null)
             {
                 return HttpNotFound();
             }
+
             return View(employee);
         }
 
@@ -95,30 +98,59 @@ namespace PayDaySample01.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Employee employee = await db.Employees.FindAsync(id);
+
+            var employee = await db.Employees.FindAsync(id);
+
             if (employee == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.CityId = new SelectList(db.Cities, "CityId", "Name", employee.CityId);
-            return View(employee);
+
+            ViewBag.CityId = new SelectList(db.Cities.OrderBy(c => c.Name), "CityId", "Name", employee.CityId);
+            var view = this.ToView(employee);
+            return View(view);
+        }
+
+        private EmployeeView ToView(Employee employee)
+        {
+            return new EmployeeView
+            {
+                CityId = employee.CityId,
+                Document = employee.Document,
+                EmployeeId = employee.EmployeeId,
+                FirstName = employee.FirstName,
+                HasChildren = employee.HasChildren,
+                HireIn = employee.HireIn,
+                LastName = employee.LastName,
+                PicturePath = employee.PicturePath,
+                Salary = employee.Salary,
+            };
         }
 
         // POST: Employees/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "EmployeeId,Document,CityId,FirstName,LastName,Picture,HireIn,Salary,HasChildren")] Employee employee)
+        public async Task<ActionResult> Edit(EmployeeView view)
         {
             if (ModelState.IsValid)
             {
+                var pic = view.PicturePath;
+                var folder = "~/Content/Photos";
+
+                if (view.PictureFile != null)
+                {
+                    pic = FilesHelper.UploadPhoto(view.PictureFile, folder);
+                    pic = $"{folder}/{pic}";
+                }
+
+                var employee = this.ToEmployee(view, pic);
                 db.Entry(employee).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            ViewBag.CityId = new SelectList(db.Cities, "CityId", "Name", employee.CityId);
-            return View(employee);
+
+            ViewBag.CityId = new SelectList(db.Cities.OrderBy(c => c.Name), "CityId", "Name", view.CityId);
+            return View(view);
         }
 
         // GET: Employees/Delete/5
