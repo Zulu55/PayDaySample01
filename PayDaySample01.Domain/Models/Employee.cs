@@ -30,8 +30,11 @@ namespace PayDaySample01.Domain.Models
         [StringLength(50, ErrorMessage = "El campo {0} no puede tener más de {1} carácteres.")]
         public string LastName { get; set; }
 
+        [Display(Name = "Foto")]
+        public string PicturePath { get; set; }
+
         [Display(Name = "Fecha contratación")]
-        [DataType(DataType.DateTime)]
+        [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
         public DateTime HireIn { get; set; }
 
@@ -41,5 +44,7 @@ namespace PayDaySample01.Domain.Models
 
         [Display(Name = "¿Tiene hijos?")]
         public bool HasChildren { get; set; }
+
+        public virtual City City { get; set; }
     }
 }

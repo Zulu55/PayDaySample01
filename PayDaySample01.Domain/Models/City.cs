@@ -13,8 +13,10 @@ namespace PayDaySample01.Domain.Models
         public int CityId { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        [Display(Name = "Nombre")]
+        [Display(Name = "Ciudad")]
         [StringLength(50, ErrorMessage = "El campo {0} no puede tener más de {1} carácteres.")]
         public string Name { get; set; }
+
+        public virtual ICollection<Employee> Employees { get; set; }
     }
 }

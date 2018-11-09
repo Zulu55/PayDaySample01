@@ -6,8 +6,8 @@ using System.Web;
 
 namespace PayDaySample01.Web.Models
 {
-    public class LocalDataContext : DataContext
+    public class EmployeeView : Employee
     {
-        public System.Data.Entity.DbSet<PayDaySample01.Domain.Models.Employee> Employees { get; set; }
+        public HttpPostedFileBase PictureFile { get; set; }
     }
 }
