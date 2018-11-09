@@ -24,7 +24,7 @@
             @Html.DisplayNameFor(model => model.LastName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Picture)
+            @Html.DisplayNameFor(model => model.PicturePath)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.HireIn)
@@ -53,7 +53,10 @@
             @Html.DisplayFor(modelItem => item.LastName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Picture)
+            @if (!string.IsNullOrEmpty(item.PicturePath))
+            {
+                <img src="@Url.Content(item.PicturePath)" alt="Image" style="width:100px;height:150px;max-width: 100%; height: auto;" />
+            }
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.HireIn)

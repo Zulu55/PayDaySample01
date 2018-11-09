@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using PayDaySample01.Domain.Models;
 using PayDaySample01.Web.Models;
+using PayDaySample01.Web.Helpers;
 
 namespace PayDaySample01.Web.Controllers
 {
@@ -46,21 +47,45 @@ namespace PayDaySample01.Web.Controllers
         }
 
         // POST: Employees/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "EmployeeId,Document,CityId,FirstName,LastName,Picture,HireIn,Salary,HasChildren")] Employee employee)
+        public async Task<ActionResult> Create(EmployeeView view)
         {
             if (ModelState.IsValid)
             {
+                var pic = string.Empty;
+                var folder = "~/Content/Photos";
+
+                if (view.PictureFile != null)
+                {
+                    pic = FilesHelper.UploadPhoto(view.PictureFile, folder);
+                    pic = $"{folder}/{pic}";
+                }
+
+                var employee = this.ToEmployee(view, pic);
                 db.Employees.Add(employee);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.CityId = new SelectList(db.Cities, "CityId", "Name", employee.CityId);
-            return View(employee);
+            ViewBag.CityId = new SelectList(db.Cities.OrderBy(c => c.Name), "CityId", "Name", view.CityId);
+            return View(view);
+        }
+
+        private Employee ToEmployee(EmployeeView view, string pic)
+        {
+            return new Employee
+            {
+                CityId = view.CityId,
+                Document = view.Document,
+                EmployeeId = view.EmployeeId,
+                FirstName = view.FirstName,
+                HasChildren = view.HasChildren,
+                HireIn = view.HireIn,
+                LastName = view.LastName,
+                PicturePath = pic,
+                Salary = view.Salary,
+            };
         }
 
         // GET: Employees/Edit/5
