@@ -3,6 +3,7 @@
     using Domain.Models;
     using Helpers;
     using Models;
+    using System;
     using System.Data.Entity;
     using System.Net;
     using System.Threading.Tasks;
@@ -93,28 +94,84 @@
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = await db.Users.FindAsync(id);
+
+            var user = await db.Users.FindAsync(id);
+
             if (user == null)
             {
                 return HttpNotFound();
             }
+
+            user.Password = "000000";
+            user.Confirm = "000000";
             return View(user);
         }
 
         // POST: Users/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "UserId,FirstName,LastName,Email,IsAdmin,CanView,CanEdit,CanCreate,CanDelete")] User user)
+        public async Task<ActionResult> Edit(User user)
         {
             if (ModelState.IsValid)
             {
+                this.CheckPermissions(user);
                 db.Entry(user).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
             return View(user);
+        }
+
+        /// <summary>
+        /// This method verifies the user permissions
+        /// </summary>
+        /// <param name="user">The user</param>
+        private void CheckPermissions(User user)
+        {
+            if (user.IsAdmin)
+            {
+                UsersHelper.AddRoleToUser(user.Email, "Admin");
+            }
+            else
+            {
+                UsersHelper.RemoveRoleToUser(user.Email, "Admin");
+            }
+
+            if (user.CanCreate)
+            {
+                UsersHelper.AddRoleToUser(user.Email, "Create");
+            }
+            else
+            {
+                UsersHelper.RemoveRoleToUser(user.Email, "Create");
+            }
+
+            if (user.CanDelete)
+            {
+                UsersHelper.AddRoleToUser(user.Email, "Delete");
+            }
+            else
+            {
+                UsersHelper.RemoveRoleToUser(user.Email, "Delete");
+            }
+
+            if (user.CanEdit)
+            {
+                UsersHelper.AddRoleToUser(user.Email, "Edit");
+            }
+            else
+            {
+                UsersHelper.RemoveRoleToUser(user.Email, "Edit");
+            }
+
+            if (user.CanView)
+            {
+                UsersHelper.AddRoleToUser(user.Email, "View");
+            }
+            else
+            {
+                UsersHelper.RemoveRoleToUser(user.Email, "View");
+            }
         }
 
         // GET: Users/Delete/5

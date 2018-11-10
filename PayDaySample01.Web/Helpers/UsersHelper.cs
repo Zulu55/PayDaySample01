@@ -67,6 +67,11 @@
             }
         }
 
+        /// <summary>
+        /// Assing the role to user
+        /// </summary>
+        /// <param name="email">The user email</param>
+        /// <param name="role">The role to be assing</param>
         public static void AddRoleToUser(string email, string role)
         {
             var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(userContext));
@@ -110,6 +115,23 @@
 
             var result = userManager.Create(userASP, password);
             return result.Succeeded;
+        }
+
+        /// <summary>
+        /// Unassign the rote from user
+        /// </summary>
+        /// <param name="email">The email</param>
+        /// <param name="role">The role</param>
+        public static void RemoveRoleToUser(string email, string role)
+        {
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(userContext));
+            var userASP = userManager.FindByEmail(email);
+            if (userASP == null)
+            {
+                return;
+            }
+
+            userManager.RemoveFromRole(userASP.Id, role);
         }
 
         public void Dispose()
