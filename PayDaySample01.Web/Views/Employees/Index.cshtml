@@ -35,6 +35,9 @@
         <th>
             @Html.DisplayNameFor(model => model.HasChildren)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
         <th></th>
     </tr>
 
@@ -68,9 +71,12 @@
             @Html.DisplayFor(modelItem => item.HasChildren)
         </td>
         <td>
-            @Html.ActionLink("Editar", "Edit", new { id=item.EmployeeId }, new { @class = "btn btn-warning" })
-            @Html.ActionLink("Detalles", "Details", new { id=item.EmployeeId }, new { @class = "btn btn-info" })
-            @Html.ActionLink("Borrar", "Delete", new { id=item.EmployeeId }, new { @class = "btn btn-danger", onclick = "return confirm('¿Está seguro de borrar el registro?')" })
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { id = item.EmployeeId }, new { @class = "btn btn-warning" })
+            @Html.ActionLink("Detalles", "Details", new { id = item.EmployeeId }, new { @class = "btn btn-info" })
+            @Html.ActionLink("Borrar", "Delete", new { id = item.EmployeeId }, new { @class = "btn btn-danger", onclick = "return confirm('¿Está seguro de borrar el registro?')" })
         </td>
     </tr>
 }

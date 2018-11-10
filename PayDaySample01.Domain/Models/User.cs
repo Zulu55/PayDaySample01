@@ -46,6 +46,9 @@ namespace PayDaySample01.Domain.Models
         [Display(Name = "¿Es Administrador?")]
         public bool IsAdmin { get; set; }
 
+        [Display(Name = "¿Es Empleado?")]
+        public bool IsEmployee { get; set; }
+
         [Display(Name = "¿Puede ver?")]
         public bool CanView { get; set; }
 

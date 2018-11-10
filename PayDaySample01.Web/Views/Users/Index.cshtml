@@ -24,6 +24,9 @@
             @Html.DisplayNameFor(model => model.IsAdmin)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.IsEmployee)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.CanView)
         </th>
         <th>
@@ -53,6 +56,9 @@
             @Html.DisplayFor(modelItem => item.IsAdmin)
         </td>
         <td>
+            @Html.DisplayFor(modelItem => item.IsEmployee)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.CanView)
         </td>
         <td>
@@ -65,9 +71,9 @@
             @Html.DisplayFor(modelItem => item.CanDelete)
         </td>
         <td>
-            @Html.ActionLink("Editar", "Edit", new { id=item.UserId }, new { @class = "btn btn-warning" })
-            @Html.ActionLink("Detalles", "Details", new { id=item.UserId }, new { @class = "btn btn-info" })
-            @Html.ActionLink("Borrar", "Delete", new { id=item.UserId }, new { @class = "btn btn-danger" })
+            @Html.ActionLink("Editar", "Edit", new { id = item.UserId }, new { @class = "btn btn-warning" })
+            @Html.ActionLink("Detalles", "Details", new { id = item.UserId }, new { @class = "btn btn-info" })
+            @Html.ActionLink("Borrar", "Delete", new { id = item.UserId }, new { @class = "btn btn-danger" })
         </td>
     </tr>
 }

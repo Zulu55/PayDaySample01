@@ -12,6 +12,7 @@
     using Domain.Models;
     using Models;
     using Helpers;
+    using System.Data.Entity.Validation;
 
     public class EmployeesController : Controller
     {
@@ -70,12 +71,48 @@
 
                 var employee = this.ToEmployee(view, pic);
                 db.Employees.Add(employee);
-                await db.SaveChangesAsync();
+
+                UsersHelper.CreateUserASP(view.Email, "Employee", view.Document);
+                var user = this.ToUser(employee);
+                db.Users.Add(user);
+
+                try
+                {
+                    await db.SaveChangesAsync();
+                }
+                catch (DbEntityValidationException e)
+                {
+                    var errors = string.Empty;
+                    foreach (var eve in e.EntityValidationErrors)
+                    {
+                        errors += $"Entity of type \"{eve.Entry.Entity.GetType().Name}\" in " +
+                            $"state \"{eve.Entry.State}\" has the following validation errors:";
+                        foreach (var ve in eve.ValidationErrors)
+                        {
+                            errors += $"- Property: \"{ve.PropertyName}\", Error: \"{ve.ErrorMessage}\"";
+                        }
+                    }
+                    throw;
+                }
+
                 return RedirectToAction("Index");
             }
 
             ViewBag.CityId = new SelectList(db.Cities.OrderBy(c => c.Name), "CityId", "Name", view.CityId);
             return View(view);
+        }
+
+        private User ToUser(Employee employee)
+        {
+            return new User
+            {
+                Confirm = employee.Document,
+                Email = employee.Email,
+                FirstName = employee.FirstName,
+                IsEmployee = true,
+                LastName = employee.LastName,
+                Password = employee.Document,
+            };
         }
 
         private Employee ToEmployee(EmployeeView view, string pic)
@@ -91,6 +128,7 @@
                 LastName = view.LastName,
                 PicturePath = pic,
                 Salary = view.Salary,
+                Email = view.Email,
             };
         }
 

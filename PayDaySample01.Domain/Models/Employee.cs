@@ -35,16 +35,24 @@ namespace PayDaySample01.Domain.Models
 
         [Display(Name = "Fecha contratación")]
         [DataType(DataType.Date)]
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
         public DateTime HireIn { get; set; }
 
         [Display(Name = "Salario")]
         [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public decimal Salary { get; set; }
 
         [Display(Name = "¿Tiene hijos?")]
         public bool HasChildren { get; set; }
 
         public virtual City City { get; set; }
+
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        [Display(Name = "Correo")]
+        [StringLength(100, ErrorMessage = "El campo {0} no puede tener más de {1} carácteres.")]
+        [DataType(DataType.EmailAddress)]
+        public string Email { get; set; }
     }
 }
