@@ -65,7 +65,7 @@
 
                 if (view.PictureFile != null)
                 {
-                    pic = FilesHelper.UploadPhoto(view.PictureFile, folder);
+                    pic = FilesHelper.UploadFile(view.PictureFile, folder);
                     pic = $"{folder}/{pic}";
                 }
 
@@ -181,7 +181,7 @@
 
                 if (view.PictureFile != null)
                 {
-                    pic = FilesHelper.UploadPhoto(view.PictureFile, folder);
+                    pic = FilesHelper.UploadFile(view.PictureFile, folder);
                     pic = $"{folder}/{pic}";
                 }
 

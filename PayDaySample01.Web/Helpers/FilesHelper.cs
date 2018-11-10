@@ -8,7 +8,7 @@
 
     public static class FilesHelper
     {
-        public static string UploadPhoto(HttpPostedFileBase file, string folder)
+        public static string UploadFile(HttpPostedFileBase file, string folder)
         {
             string path = string.Empty;
             string pic = string.Empty;

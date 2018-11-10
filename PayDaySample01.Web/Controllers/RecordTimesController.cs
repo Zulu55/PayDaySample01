@@ -9,12 +9,34 @@ using System.Web;
 using System.Web.Mvc;
 using PayDaySample01.Domain.Models;
 using PayDaySample01.Web.Models;
+using PayDaySample01.Web.Helpers;
 
 namespace PayDaySample01.Web.Controllers
 {
     public class RecordTimesController : Controller
     {
         private LocalDataContext db = new LocalDataContext();
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult Import()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Import(ImportTimeFileView view)
+        {
+            var file = string.Empty;
+            var folder = "~/Content/Files";
+
+            if (view.TimeFile != null)
+            {
+                file = FilesHelper.UploadFile(view.TimeFile, folder);
+                file = $"{folder}/{file}";
+            }
+
+            return View();
+        }
 
         public async Task<ActionResult> ShowResults()
         {
@@ -114,6 +136,16 @@ namespace PayDaySample01.Web.Controllers
                 Include(r => r.Employee).
                 Where(r => r.Employee.Email.Equals(User.Identity.Name)).
                 OrderByDescending(r => r.DateStart);
+            return View(await recordTimes.ToListAsync());
+        }
+
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult> Index2()
+        {
+            var recordTimes = db.RecordTimes.
+                Include(r => r.Employee).
+                OrderBy(r => r.Employee.EmployeeId).
+                ThenBy(r => r.DateStart);
             return View(await recordTimes.ToListAsync());
         }
 

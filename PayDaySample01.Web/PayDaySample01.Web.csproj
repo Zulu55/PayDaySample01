@@ -190,6 +190,7 @@
     <Compile Include="Models\CalculatePayView.cs" />
     <Compile Include="Models\EmployeeView.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\ImportTimeFileView.cs" />
     <Compile Include="Models\LocalDataContext.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\RecordTimeView.cs" />
@@ -276,9 +277,12 @@
     <Content Include="Views\RecordTimes\Index.cshtml" />
     <Content Include="Views\RecordTimes\CalculatePays.cshtml" />
     <Content Include="Views\RecordTimes\ShowResults.cshtml" />
+    <Content Include="Views\RecordTimes\Index2.cshtml" />
+    <Content Include="Views\RecordTimes\Import.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\Files\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
