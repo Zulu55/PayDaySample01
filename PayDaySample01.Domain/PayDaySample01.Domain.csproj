@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\CalculatedSalary.cs" />
     <Compile Include="Models\City.cs" />
     <Compile Include="Models\DataContext.cs" />
     <Compile Include="Models\Employee.cs" />

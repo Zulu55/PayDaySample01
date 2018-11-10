@@ -16,6 +16,14 @@ namespace PayDaySample01.Web.Controllers
     {
         private LocalDataContext db = new LocalDataContext();
 
+        public async Task<ActionResult> ShowResults()
+        {
+            var x = System.Web.HttpContext.Current.Session["calculatedSalaries"];
+
+            var calculatedSalaries = db.CalculatedSalaries.Include(c => c.Employee);
+            return View(await calculatedSalaries.ToListAsync());
+        }
+
         [Authorize(Roles = "Admin")]
         public ActionResult CalculatePays()
         {
@@ -59,14 +67,26 @@ namespace PayDaySample01.Web.Controllers
 
                             calculatedSalaries.Add(new CalculatedSalary
                             {
+                                EmployeeId = previousEmployee,
                                 Employee = employee,
                                 TotalToPay = this.CalculateSalary(employee, totalTime),
                                 WorkedTime = totalTime,
+                                WorkedHours = totalTime.TotalHours,
                             });
+
                         }
+
+                        System.Web.HttpContext.Current.Session["calculatedSalaries"] = calculatedSalaries;
+
+                        db.CalculatedSalaries.RemoveRange(db.CalculatedSalaries.ToList());
+                        db.CalculatedSalaries.AddRange(calculatedSalaries);
+                        await db.SaveChangesAsync();
+
+                        return RedirectToAction("ShowResults");
                     }
 
                     ModelState.AddModelError(string.Empty, "No hay registros para liquidar la nómina.");
+                    return View(view);
                 }
 
                 ModelState.AddModelError(string.Empty, "La fecha de fin debe ser mayor o igual a la fecha inicial.");

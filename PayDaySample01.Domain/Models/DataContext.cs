@@ -12,6 +12,8 @@
 
         public DbSet<RecordTime> RecordTimes { get; set; }
 
+        public DbSet<CalculatedSalary> CalculatedSalaries { get; set; }
+
         public DataContext() : base("DefaultConnection")
         {
 

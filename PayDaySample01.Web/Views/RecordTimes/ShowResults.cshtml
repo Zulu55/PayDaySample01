@@ -1,0 +1,41 @@
+﻿@model IEnumerable<PayDaySample01.Domain.Models.CalculatedSalary>
+
+@{
+    ViewBag.Title = "ShowResults";
+}
+
+<h2>Nómina</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Employee.Document)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Employee.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.WorkedHours)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalToPay)
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Employee.Document)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Employee.FullName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.WorkedHours)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TotalToPay)
+        </td>
+    </tr>
+}
+</table>

@@ -187,7 +187,6 @@
     <Compile Include="Helpers\UsersHelper.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\CalculatedSalary.cs" />
     <Compile Include="Models\CalculatePayView.cs" />
     <Compile Include="Models\EmployeeView.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -276,6 +275,7 @@
     <Content Include="Views\RecordTimes\Edit.cshtml" />
     <Content Include="Views\RecordTimes\Index.cshtml" />
     <Content Include="Views\RecordTimes\CalculatePays.cshtml" />
+    <Content Include="Views\RecordTimes\ShowResults.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -57,6 +57,8 @@ namespace PayDaySample01.Domain.Models
 
         public virtual ICollection<RecordTime> RecordTimes { get; set; }
 
+        public ICollection<CalculatedSalary> CalculatedSalaries { get; set; }
+
         [Display(Name = "Nombres y Apellidos")]
         public string FullName { get { return $"{this.FirstName} {this.LastName}"; } }
     }
