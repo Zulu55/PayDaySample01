@@ -54,5 +54,10 @@ namespace PayDaySample01.Domain.Models
         [StringLength(100, ErrorMessage = "El campo {0} no puede tener más de {1} carácteres.")]
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
+
+        public virtual ICollection<RecordTime> RecordTimes { get; set; }
+
+        [Display(Name = "Nombres y Apellidos")]
+        public string FullName { get { return $"{this.FirstName} {this.LastName}"; } }
     }
 }

@@ -18,10 +18,7 @@
             @Html.DisplayNameFor(model => model.Document)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LastName)
+            @Html.DisplayNameFor(model => model.FullName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.PicturePath)
@@ -38,7 +35,7 @@
         <th>
             @Html.DisplayNameFor(model => model.Email)
         </th>
-        <th></th>
+        <th width="230px"></th>
     </tr>
 
 @foreach (var item in Model) {
@@ -50,10 +47,7 @@
             @Html.DisplayFor(modelItem => item.Document)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.FirstName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LastName)
+            @Html.DisplayFor(modelItem => item.FullName)
         </td>
         <td>
             @if (!string.IsNullOrEmpty(item.PicturePath))

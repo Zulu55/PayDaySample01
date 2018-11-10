@@ -1,0 +1,45 @@
+﻿@model IEnumerable<PayDaySample01.Domain.Models.RecordTime>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Registro de Tiempos</h2>
+
+<p>
+    @Html.ActionLink("Nuevo", "Create", new { }, new { @class = "btn btn-primary" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.DateStart)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateEnd)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Time)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateStart)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateEnd)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Time)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { id = item.RecordTimeId }, new { @class = "btn btn-warning" })
+            @Html.ActionLink("Detalles", "Details", new { id = item.RecordTimeId }, new { @class = "btn btn-info" })
+            @Html.ActionLink("Borrar", "Delete", new { id = item.RecordTimeId }, new { @class = "btn btn-danger" })
+        </td>
+    </tr>
+}
+
+</table>

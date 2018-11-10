@@ -28,7 +28,12 @@
                     <li>@Html.ActionLink("Empleados", "Index", "Employees")</li>
                     @if (User.IsInRole("Admin"))
                     {
-                        <li>@Html.ActionLink("Usuarios", "Index", "Users")</li>
+                        <li> @Html.ActionLink("Usuarios", "Index", "Users")</li>
+                        <li>@Html.ActionLink("Liquidar Nómina", "CalculatePays", "RecordTimes")</li>
+                    }
+                    @if (User.IsInRole("Employee"))
+                    {
+                        <li>@Html.ActionLink("Registro de Tiempos", "Index", "RecordTimes")</li>
                     }
                 </ul>
                 @Html.Partial("_LoginPartial")
