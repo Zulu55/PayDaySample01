@@ -1,20 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
-using PayDaySample01.Domain.Models;
-using PayDaySample01.Web.Models;
-using PayDaySample01.Web.Helpers;
-
-namespace PayDaySample01.Web.Controllers
+﻿namespace PayDaySample01.Web.Controllers
 {
+    using PayDaySample01.Domain.Models;
+    using PayDaySample01.Web.Helpers;
+    using PayDaySample01.Web.Models;
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Data.Entity;
+    using System.Linq;
+    using System.Net;
+    using System.Threading.Tasks;
+    using System.Web;
+    using System.Web.Mvc;
+
+    /// <summary>
+    /// Record times controller
+    /// </summary>
     public class RecordTimesController : Controller
     {
+        /// <summary>
+        /// The connectio DB
+        /// </summary>
         private LocalDataContext db = new LocalDataContext();
 
         [Authorize(Roles = "Admin")]
@@ -24,18 +30,114 @@ namespace PayDaySample01.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Import(ImportTimeFileView view)
+        public async Task<ActionResult> Import(ImportTimeFileView view)
+        {
+            if (view.TimeFile == null)
+            {
+                ModelState.AddModelError(string.Empty, "Se debe seleccionar un archivo.");
+                return View();
+            }
+
+            var file = this.GetFile(view.TimeFile);
+            var response = await this.ProcessFile(file);
+            if (!response.IsSuccess)
+            {
+                ModelState.AddModelError(string.Empty, response.Message);
+                return View();
+            }
+
+            if (!string.IsNullOrEmpty(response.Message))
+            {
+                ModelState.AddModelError(string.Empty, $"Se importó el archivo, " +
+                    $"pero hubo problema en los siguientes registros: {response.Message}");
+                return View();
+            }
+
+            return RedirectToAction("Index2");
+        }
+
+        private async Task<Response> ProcessFile(string file)
+        {
+            var path = System.Web.HttpContext.Current.Server.MapPath(file);
+            var lines = System.IO.File.ReadAllLines(path);
+            var log = string.Empty;
+
+            using (var transaction = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    int lineNumber = 0;
+                    foreach (var line in lines)
+                    {
+                        try
+                        {
+                            var fields = line.Split(',');
+                            var recordTime = new RecordTime
+                            {
+                                EmployeeId = int.Parse(fields[0]),
+                                DateStart = DateTime.Parse(fields[1]),
+                                DateEnd = DateTime.Parse(fields[2]),
+                            };
+
+                            var oldRecord = await db.RecordTimes.
+                                Where(r => r.EmployeeId == recordTime.EmployeeId &&
+                                           r.DateStart == recordTime.DateStart &&
+                                           r.DateEnd == recordTime.DateEnd).
+                                FirstOrDefaultAsync();
+
+                            if (oldRecord == null)
+                            {
+                                db.RecordTimes.Add(recordTime);
+                            }
+
+                        }
+                        catch (Exception ex)
+                        {
+                            log += $"EROR Línea: {lineNumber}, {ex.Message}\n";
+                        }
+
+                        lineNumber++;
+                    }
+
+                    await db.SaveChangesAsync();
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    ex.ToString();
+                    return new Response
+                    {
+                        IsSuccess = false,
+                        Message = ex.ToString(),
+                    };
+                } 
+            }
+
+            return new Response
+            {
+                IsSuccess = true,
+                Message = log,
+            };
+        }
+
+        /// <summary>
+        /// Get the file
+        /// </summary>
+        /// <param name="timeFile">The objct that represents the file</param>
+        /// <returns>The path of upload file</returns>
+        private string GetFile(HttpPostedFileBase timeFile)
         {
             var file = string.Empty;
             var folder = "~/Content/Files";
 
-            if (view.TimeFile != null)
+            if (timeFile != null)
             {
-                file = FilesHelper.UploadFile(view.TimeFile, folder);
+                file = FilesHelper.UploadFile(timeFile, folder);
                 file = $"{folder}/{file}";
             }
 
-            return View();
+            return file;
         }
 
         public async Task<ActionResult> ShowResults()
