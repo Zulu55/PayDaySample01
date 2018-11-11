@@ -9,25 +9,37 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+<div class="form-horizontal">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.TimeFile, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <span class="btn btn-default btn-file">
-                    @Html.TextBoxFor(modelo => modelo.TimeFile, new { type = "file" })
-                </span>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Importar" class="btn btn-primary" />
-                @Html.ActionLink("Regresar", "Index2", new { }, new { @class = "btn btn-success" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.TimeFile, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <div class="file-input-new">
+                <div class="input-group" style="width:280px">
+                    <div tabindex="500" class="form-control file-caption">
+                        <div class="file-caption-name" id="NombreArchivo">
+                        </div>
+                    </div>
+                    <div class="input-group-btn" style="height:auto">
+                        <div tabindex="500" class="btn btn-primary btn-file">
+                            <i class="glyphicon glyphicon-folder-open"></i>
+                            Seleccionar...
+                            @Html.TextBoxFor(modelo => modelo.TimeFile, new { type = "file", id = "filesText" })
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Importar" class="btn btn-primary" />
+            @Html.ActionLink("Regresar", "Index2", new { }, new { @class = "btn btn-success" })
+        </div>
+    </div>
+</div>
 }
 
 @section Scripts {

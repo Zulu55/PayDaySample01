@@ -55,9 +55,21 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.PictureFile, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        <span class="btn btn-default btn-file">
-                            @Html.TextBoxFor(modelo => modelo.PictureFile, new { type = "file" })
-                        </span>
+                        <div class="file-input-new">
+                            <div class="input-group" style="width:280px">
+                                <div tabindex="500" class="form-control file-caption">
+                                    <div class="file-caption-name" id="NombreArchivo">
+                                    </div>
+                                </div>
+                                <div class="input-group-btn" style="height:auto">
+                                    <div tabindex="500" class="btn btn-primary btn-file">
+                                        <i class="glyphicon glyphicon-folder-open"></i>
+                                        Seleccionar...
+                                        @Html.TextBoxFor(modelo => modelo.PictureFile, new { type = "file", id = "filesImage" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -66,6 +78,14 @@
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.HireIn, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.HireIn, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                     </div>
                 </div>
 

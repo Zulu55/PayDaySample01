@@ -6755,3 +6755,74 @@ button.close {
   }
 }
 /*# sourceMappingURL=bootstrap.css.map */
+
+.file-object {
+    margin: 0 0 -5px 0;
+    padding: 0;
+}
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+
+    .btn-file input[type=file] {
+        position: absolute;
+        top: 0;
+        right: 0;
+        min-width: 100%;
+        min-height: 100%;
+        text-align: right;
+        opacity: 0;
+        background: none repeat scroll 0 0 transparent;
+        cursor: inherit;
+        display: block;
+    }
+
+.file-caption-name {
+    display: inline-block;
+    word-break: break-all;
+    display: inline-block;
+    height: auto;
+}
+
+.input-group-lg .file-caption-name {
+    height: auto;
+}
+
+.file-caption-disabled {
+    background-color: #EEEEEE;
+    cursor: not-allowed;
+    opacity: 1;
+}
+
+.file-actions, .file-other-error {
+    text-align: left;
+}
+
+.file-icon-lg {
+    font-size: 1.2em;
+}
+
+.file-icon-2x {
+    font-size: 2.4em;
+}
+
+.file-icon-4x {
+    font-size: 4.8em;
+}
+
+.file-input-new .file-preview, .file-input-new .close, .file-input-new .glyphicon-file,
+.file-input-new .fileinput-remove-button, .file-input-new .fileinput-upload-button,
+.file-input-ajax-new .fileinput-remove-button, .file-input-ajax-new .fileinput-upload-button {
+    display: none;
+}
+
+.file-actions {
+    margin-top: 15px;
+}
+
+.highlighted {
+    border: 2px dashed #999 !important;
+    background-color: #f0f0f0;
+}

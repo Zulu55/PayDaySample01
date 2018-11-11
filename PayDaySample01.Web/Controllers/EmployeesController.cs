@@ -268,6 +268,7 @@
                 LastName = employee.LastName,
                 PicturePath = employee.PicturePath,
                 Salary = employee.Salary,
+                Email = employee.Email,
             };
         }
 
