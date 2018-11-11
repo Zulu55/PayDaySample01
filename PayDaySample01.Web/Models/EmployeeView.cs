@@ -11,5 +11,7 @@ namespace PayDaySample01.Web.Models
     {
         [Display(Name = "Foto")]
         public HttpPostedFileBase PictureFile { get; set; }
+
+        public int CountryId { get; set; }
     }
 }

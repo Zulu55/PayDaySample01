@@ -19,6 +19,8 @@
 
         public DbSet<Dependent> Dependents { get; set; }
 
+        public DbSet<Country> Countries { get; set; }
+
         public DataContext() : base("DefaultConnection")
         {
 

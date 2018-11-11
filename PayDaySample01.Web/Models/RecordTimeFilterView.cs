@@ -1,4 +1,5 @@
-﻿using PayDaySample01.Domain.Models;
+﻿using PagedList;
+using PayDaySample01.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -20,7 +21,6 @@ namespace PayDaySample01.Web.Models
         [DataType(DataType.Date)]
         public DateTime DateEnd { get; set; }
 
-        public List<RecordTime> RecordTimes { get; set; }
-
+        public IPagedList<RecordTime> RecordTimes { get; set; }
     }
 }

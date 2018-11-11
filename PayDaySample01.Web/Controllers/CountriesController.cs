@@ -12,109 +12,108 @@ using PayDaySample01.Web.Models;
 
 namespace PayDaySample01.Web.Controllers
 {
-    public class CitiesController : Controller
+    [Authorize(Roles = "Admin")]
+    public class CountriesController : Controller
     {
         private LocalDataContext db = new LocalDataContext();
 
-        // GET: Cities
-        [Authorize(Roles = "View")]
+        // GET: Countries
         public async Task<ActionResult> Index()
         {
-            return View(await db.Cities.OrderBy(c => c.Name).ToListAsync());
+            return View(await db.Countries.ToListAsync());
         }
 
-        // GET: Cities/Details/5
+        // GET: Countries/Details/5
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            City city = await db.Cities.FindAsync(id);
-            if (city == null)
+            Country country = await db.Countries.FindAsync(id);
+            if (country == null)
             {
                 return HttpNotFound();
             }
-            return View(city);
+            return View(country);
         }
 
-        // GET: Cities/Create
+        // GET: Countries/Create
         public ActionResult Create()
         {
-            ViewBag.CountryId = new SelectList(db.Countries.OrderBy(c => c.Name), "CountryId", "Name");
             return View();
         }
 
-        // POST: Cities/Create
+        // POST: Countries/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(City city)
+        public async Task<ActionResult> Create([Bind(Include = "CountryId,Name")] Country country)
         {
             if (ModelState.IsValid)
             {
-                db.Cities.Add(city);
+                db.Countries.Add(country);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
-            return View(city);
+            return View(country);
         }
 
-        // GET: Cities/Edit/5
+        // GET: Countries/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
-            var city = await db.Cities.FindAsync(id);
-
-            if (city == null)
+            Country country = await db.Countries.FindAsync(id);
+            if (country == null)
             {
                 return HttpNotFound();
             }
-
-            ViewBag.CountryId = new SelectList(db.Countries.OrderBy(c => c.Name), "CountryId", "Name");
-            return View(city);
+            return View(country);
         }
 
-        // POST: Cities/Edit/5
+        // POST: Countries/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(City city)
+        public async Task<ActionResult> Edit([Bind(Include = "CountryId,Name")] Country country)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(city).State = EntityState.Modified;
+                db.Entry(country).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            return View(city);
+            return View(country);
         }
 
-        // GET: Cities/Delete/5
+        // GET: Countries/Delete/5
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            City city = await db.Cities.FindAsync(id);
-            if (city == null)
+            Country country = await db.Countries.FindAsync(id);
+            if (country == null)
             {
                 return HttpNotFound();
             }
-            return View(city);
+            return View(country);
         }
 
-        // POST: Cities/Delete/5
+        // POST: Countries/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            City city = await db.Cities.FindAsync(id);
-            db.Cities.Remove(city);
+            Country country = await db.Countries.FindAsync(id);
+            db.Countries.Remove(country);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }

@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="Models\CalculatedSalary.cs" />
     <Compile Include="Models\City.cs" />
+    <Compile Include="Models\Country.cs" />
     <Compile Include="Models\DataContext.cs" />
     <Compile Include="Models\Dependent.cs" />
     <Compile Include="Models\Employee.cs" />

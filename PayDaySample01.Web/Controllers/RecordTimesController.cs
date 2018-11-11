@@ -12,6 +12,7 @@
     using System.Threading.Tasks;
     using System.Web;
     using System.Web.Mvc;
+    using PagedList;
 
     /// <summary>
     /// Record times controller
@@ -242,83 +243,82 @@
         }
 
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult> Index2(RecordTimeFilterView view)
+        public async Task<ActionResult> Index2(RecordTimeFilterView view, int? page = null)
         {
-            var recordTimes = new List<RecordTime>();
+            page = (page ?? 1);
 
             if (view.EmployeeId == 0 && view.DateStart == DateTime.MinValue && view.DateEnd == DateTime.MinValue)
             {
-                recordTimes = await db.RecordTimes.
+                var recordTimes = db.RecordTimes.
                     Include(r => r.Employee).
                     OrderBy(r => r.Employee.EmployeeId).
-                    ThenBy(r => r.DateStart).
-                    ToListAsync();
+                    ThenBy(r => r.DateStart);
+                view.RecordTimes = recordTimes.ToPagedList((int)page, 10);
             }
             else if (view.EmployeeId != 0 && view.DateStart == DateTime.MinValue && view.DateEnd == DateTime.MinValue)
             {
-                recordTimes = await db.RecordTimes.
+                var recordTimes = db.RecordTimes.
                     Include(r => r.Employee).
                     Where(r => r.EmployeeId == view.EmployeeId).
                     OrderBy(r => r.Employee.EmployeeId).
-                    ThenBy(r => r.DateStart).
-                    ToListAsync();
+                    ThenBy(r => r.DateStart);
+                view.RecordTimes = recordTimes.ToPagedList((int)page, 10);
             }
             else if (view.EmployeeId == 0 && view.DateStart != DateTime.MinValue && view.DateEnd == DateTime.MinValue)
             {
-                recordTimes = await db.RecordTimes.
+                var recordTimes = db.RecordTimes.
                     Include(r => r.Employee).
                     Where(r => r.DateStart >= view.DateStart).
                     OrderBy(r => r.Employee.EmployeeId).
-                    ThenBy(r => r.DateStart).
-                    ToListAsync();
+                    ThenBy(r => r.DateStart);
+                view.RecordTimes = recordTimes.ToPagedList((int)page, 10);
             }
             else if (view.EmployeeId == 0 && view.DateStart == DateTime.MinValue && view.DateEnd != DateTime.MinValue)
             {
-                recordTimes = await db.RecordTimes.
+                var recordTimes = db.RecordTimes.
                     Include(r => r.Employee).
                     Where(r => r.DateStart <= view.DateEnd).
                     OrderBy(r => r.Employee.EmployeeId).
-                    ThenBy(r => r.DateStart).
-                    ToListAsync();
+                    ThenBy(r => r.DateStart);
+                view.RecordTimes = recordTimes.ToPagedList((int)page, 10);
             }
             else if (view.EmployeeId == 0 && view.DateStart != DateTime.MinValue && view.DateEnd != DateTime.MinValue)
             {
-                recordTimes = await db.RecordTimes.
+                var recordTimes = db.RecordTimes.
                     Include(r => r.Employee).
                     Where(r => r.DateStart >= view.DateStart && r.DateStart <= view.DateEnd).
                     OrderBy(r => r.Employee.EmployeeId).
-                    ThenBy(r => r.DateStart).
-                    ToListAsync();
+                    ThenBy(r => r.DateStart);
+                view.RecordTimes = recordTimes.ToPagedList((int)page, 10);
             }
             else if (view.EmployeeId != 0 && view.DateStart != DateTime.MinValue && view.DateEnd != DateTime.MinValue)
             {
-                recordTimes = await db.RecordTimes.
+                var recordTimes = db.RecordTimes.
                     Include(r => r.Employee).
                     Where(r => r.EmployeeId == view.EmployeeId && r.DateStart >= view.DateStart && r.DateStart <= view.DateEnd).
                     OrderBy(r => r.Employee.EmployeeId).
-                    ThenBy(r => r.DateStart).
-                    ToListAsync();
+                    ThenBy(r => r.DateStart);
+                view.RecordTimes = recordTimes.ToPagedList((int)page, 10);
             }
             else if (view.EmployeeId != 0 && view.DateStart != DateTime.MinValue && view.DateEnd == DateTime.MinValue)
             {
-                recordTimes = await db.RecordTimes.
+                var recordTimes = db.RecordTimes.
                     Include(r => r.Employee).
                     Where(r => r.EmployeeId == view.EmployeeId && r.DateStart >= view.DateStart).
                     OrderBy(r => r.Employee.EmployeeId).
-                    ThenBy(r => r.DateStart).
-                    ToListAsync();
+                    ThenBy(r => r.DateStart);
+                view.RecordTimes = recordTimes.ToPagedList((int)page, 10);
             }
             else if (view.EmployeeId != 0 && view.DateStart == DateTime.MinValue && view.DateEnd != DateTime.MinValue)
             {
-                recordTimes = await db.RecordTimes.
+                var recordTimes = db.RecordTimes.
                     Include(r => r.Employee).
                     Where(r => r.EmployeeId == view.EmployeeId && r.DateStart <= view.DateEnd).
                     OrderBy(r => r.Employee.EmployeeId).
-                    ThenBy(r => r.DateStart).
-                    ToListAsync();
+                    ThenBy(r => r.DateStart);
+                view.RecordTimes = recordTimes.ToPagedList((int)page, 10);
             }
 
-            view.RecordTimes = recordTimes;
             var list = await db.Employees.OrderBy(e => e.FirstName).ThenBy(e => e.LastName).ToListAsync();
             list.Insert(0, new Employee
             {

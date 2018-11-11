@@ -14,6 +14,7 @@
     using Helpers;
     using System.Data.Entity.Validation;
     using System.Collections;
+    using PagedList;
 
     public class EmployeesController : Controller
     {
@@ -123,10 +124,14 @@
 
         // GET: Employees
         [Authorize(Roles = "View, Admin")]
-        public async Task<ActionResult> Index()
+        public ActionResult Index(int? page = null)
         {
-            var employees = db.Employees.Include(e => e.City);
-            return View(await employees.ToListAsync());
+            page = (page ?? 1);
+            var employees = db.Employees.
+                OrderBy(e => e.FirstName).
+                ThenBy(e => e.LastName).
+                Include(e => e.City);
+            return View(employees.ToPagedList((int)page, 4));
         }
 
         // GET: Employees/Details/5
@@ -152,7 +157,16 @@
         [Authorize(Roles = "Create, Admin")]
         public ActionResult Create()
         {
-            ViewBag.CityId = new SelectList(db.Cities.OrderBy(c => c.Name), "CityId", "Name");
+            ViewBag.CountryId = new SelectList(
+                db.Countries.OrderBy(c => c.Name), 
+                "CountryId", 
+                "Name");
+            ViewBag.CityId = new SelectList(
+                db.Cities.
+                    Where(c => c.CountryId == db.Countries.OrderBy(co => co.Name).FirstOrDefault().CountryId).
+                    OrderBy(c => c.Name), 
+                "CityId", 
+                "Name");
             return View();
         }
 
@@ -332,6 +346,13 @@
             }
 
             return RedirectToAction("Index");
+        }
+
+        public JsonResult GetCities(int countryId)
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+            var cities = db.Cities.Where(c => c.CountryId == countryId);
+            return Json(cities);
         }
 
         protected override void Dispose(bool disposing)

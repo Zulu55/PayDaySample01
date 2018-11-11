@@ -7,21 +7,16 @@ using System.Threading.Tasks;
 
 namespace PayDaySample01.Domain.Models
 {
-    public class City
+    public class Country
     {
         [Key]
-        public int CityId { get; set; }
-
-        [Display(Name = "País")]
         public int CountryId { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        [Display(Name = "Ciudad")]
+        [Display(Name = "País")]
         [StringLength(50, ErrorMessage = "El campo {0} no puede tener más de {1} carácteres.")]
         public string Name { get; set; }
 
-        public virtual ICollection<Employee> Employees { get; set; }
-
-        public virtual Country Country { get; set; }
+        public virtual ICollection<City> Cities { get; set; }
     }
 }
