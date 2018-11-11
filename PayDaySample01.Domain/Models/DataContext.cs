@@ -14,6 +14,10 @@
 
         public DbSet<CalculatedSalary> CalculatedSalaries { get; set; }
 
+        public DbSet<Relation> Relations { get; set; }
+
+        public DbSet<Dependent> Dependents { get; set; }
+
         public DataContext() : base("DefaultConnection")
         {
 

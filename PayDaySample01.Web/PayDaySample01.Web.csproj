@@ -175,10 +175,12 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CitiesController.cs" />
+    <Compile Include="Controllers\DependentsController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RecordTimesController.cs" />
+    <Compile Include="Controllers\RelationsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -193,6 +195,7 @@
     <Compile Include="Models\ImportTimeFileView.cs" />
     <Compile Include="Models\LocalDataContext.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\RecordTimeFilterView.cs" />
     <Compile Include="Models\RecordTimeView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -280,6 +283,18 @@
     <Content Include="Views\RecordTimes\ShowResults.cshtml" />
     <Content Include="Views\RecordTimes\Index2.cshtml" />
     <Content Include="Views\RecordTimes\Import.cshtml" />
+    <Content Include="Views\Relations\Create.cshtml" />
+    <Content Include="Views\Relations\Delete.cshtml" />
+    <Content Include="Views\Relations\Details.cshtml" />
+    <Content Include="Views\Relations\Edit.cshtml" />
+    <Content Include="Views\Relations\Index.cshtml" />
+    <Content Include="Views\Dependents\Create.cshtml" />
+    <Content Include="Views\Dependents\Delete.cshtml" />
+    <Content Include="Views\Dependents\Details.cshtml" />
+    <Content Include="Views\Dependents\Edit.cshtml" />
+    <Content Include="Views\Dependents\Index.cshtml" />
+    <Content Include="Views\Employees\AddDependent.cshtml" />
+    <Content Include="Views\Employees\EditDependent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

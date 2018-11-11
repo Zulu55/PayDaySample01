@@ -6,80 +6,141 @@
 
 <h2>Detalles</h2>
 
-<div>
-    <h4>Empleado</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.City.Name)
-        </dt>
+<div class="row">
+    <div class="col-md-8">
+        <div>
+            <h4>Empleado</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.City.Name)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.City.Name)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.City.Name)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Document)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Document)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Document)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.Document)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.FirstName)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.FirstName)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.LastName)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.LastName)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.LastName)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.LastName)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.PicturePath)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.HireIn)
+                </dt>
 
-        <dd>
-            @if (!string.IsNullOrEmpty(Model.PicturePath))
-            {
-                <img src="@Url.Content(Model.PicturePath)" alt="Image" style="width:300px;height:150px;max-width: 100%; height: auto;" />
-            }
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.HireIn)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.HireIn)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Salary)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.HireIn)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.Salary)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Salary)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.HasChildren)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Salary)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.HasChildren)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.HasChildren)
-        </dd>
-
-    </dl>
+                <dd>
+                    @Html.DisplayFor(model => model.HasChildren)
+                </dd>
+            </dl>
+        </div>
+    </div>
+    <div class="col-md-4">
+        @if (!string.IsNullOrEmpty(Model.PicturePath))
+        {
+            <img src="@Url.Content(Model.PicturePath)" alt="Image" style="width:200px;height:150px;max-width: 100%; height: auto;" />
+        }
+    </div>
 </div>
+
 <p>
-    @Html.ActionLink("Editar", "Edit", new { id = Model.EmployeeId }, new { @class = "btn btn-warning" }) 
+    @Html.ActionLink("Editar", "Edit", new { id = Model.EmployeeId }, new { @class = "btn btn-warning" })
+    @Html.ActionLink("Adicionar Dependiente", "AddDependent", new { id = Model.EmployeeId }, new { @class = "btn btn-primary" })
     @Html.ActionLink("Regresar", "Index", new { }, new { @class = "btn btn-success" })
 </p>
+
+<h4>Dependientes</h4>
+
+@if (Model.Dependents.Count == 0)
+{
+    <h3>No hay dependientes registrados para este empleado.</h3>
+}
+else
+{
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Dependents.FirstOrDefault().Relation.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Dependents.FirstOrDefault().Document)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Dependents.FirstOrDefault().FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Dependents.FirstOrDefault().LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Dependents.FirstOrDefault().Born)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Dependents.FirstOrDefault().IsActive)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.Dependents)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Relation.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Document)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Born)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsActive)
+                </td>
+                <td>
+                    @Html.ActionLink("Editar", "EditDependent", new { id = item.DependentId }, new { @class = "btn btn-warning" })
+                    @Html.ActionLink("Borrar", "DeleteDependent", new { id = item.DependentId }, new { @class = "btn btn-danger", onclick = "return confirm('¿Está seguro de borrar este registro?')" })
+                </td>
+            </tr>
+        }
+    </table>
+}

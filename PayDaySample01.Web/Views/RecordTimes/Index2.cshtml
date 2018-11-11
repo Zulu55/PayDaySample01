@@ -1,51 +1,79 @@
-﻿@model IEnumerable<PayDaySample01.Domain.Models.RecordTime>
-
+﻿@model PayDaySample01.Web.Models.RecordTimeFilterView
 @{
     ViewBag.Title = "Index2";
 }
 
 <h2>Timepos Reportados</h2>
 
-<p>
-    @Html.ActionLink("Importar Tiempos", "Import", new { }, new { @class = "btn btn-primary" })
-</p>
+@using (Html.BeginForm())
+{
+<div class="row">
+    <div class="col-md-1">
+        @Html.LabelFor(model => model.EmployeeId, htmlAttributes: new { @class = "control-label col-md-2" })
+    </div>
+    <div class="col-md-3">
+        @Html.DropDownList("EmployeeId", null, htmlAttributes: new { @class = "form-control" })
+    </div>
+
+    <div class="col-md-1">
+        @Html.LabelFor(model => model.DateStart, htmlAttributes: new { @class = "control-label col-md-2" })
+    </div>
+    <div class="col-md-2">
+        @Html.EditorFor(model => model.DateStart, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+
+    <div class="col-md-1">
+        @Html.LabelFor(model => model.DateEnd, htmlAttributes: new { @class = "control-label col-md-2" })
+    </div>
+    <div class="col-md-2">
+        @Html.EditorFor(model => model.DateEnd, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+
+    <div class="col-md-2">
+        <input type="submit" value="Filtar" class="btn btn-info" />
+        @Html.ActionLink("Importar", "Import", new { }, new { @class = "btn btn-warning" })
+    </div>
+</div>
+}
+
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Employee.Document)
+            @Html.DisplayNameFor(model => model.RecordTimes.FirstOrDefault().Employee.Document)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Employee.FullName)
+            @Html.DisplayNameFor(model => model.RecordTimes.FirstOrDefault().Employee.FullName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DateStart)
+            @Html.DisplayNameFor(model => model.RecordTimes.FirstOrDefault().DateStart)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DateEnd)
+            @Html.DisplayNameFor(model => model.RecordTimes.FirstOrDefault().DateEnd)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Time)
+            @Html.DisplayNameFor(model => model.RecordTimes.FirstOrDefault().Time)
         </th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Employee.Document)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Employee.FullName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DateStart)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DateEnd)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Time)
-        </td>
-    </tr>
-}
+    @foreach (var item in Model.RecordTimes)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Employee.Document)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Employee.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateStart)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateEnd)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Time)
+            </td>
+        </tr>
+    }
 
 </table>

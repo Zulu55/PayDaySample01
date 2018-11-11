@@ -51,7 +51,9 @@
     <Compile Include="Models\CalculatedSalary.cs" />
     <Compile Include="Models\City.cs" />
     <Compile Include="Models\DataContext.cs" />
+    <Compile Include="Models\Dependent.cs" />
     <Compile Include="Models\Employee.cs" />
+    <Compile Include="Models\Relation.cs" />
     <Compile Include="Models\RecordTime.cs" />
     <Compile Include="Models\Response.cs" />
     <Compile Include="Models\User.cs" />

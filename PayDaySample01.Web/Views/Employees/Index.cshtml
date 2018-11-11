@@ -35,6 +35,9 @@
         <th>
             @Html.DisplayNameFor(model => model.Email)
         </th>
+        <th>
+            # Dep.
+        </th>
         <th width="230px"></th>
     </tr>
 
@@ -66,6 +69,9 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Dependents.Count)
         </td>
         <td>
             @Html.ActionLink("Editar", "Edit", new { id = item.EmployeeId }, new { @class = "btn btn-warning" })

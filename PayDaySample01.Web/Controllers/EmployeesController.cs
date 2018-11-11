@@ -13,10 +13,113 @@
     using Models;
     using Helpers;
     using System.Data.Entity.Validation;
+    using System.Collections;
 
     public class EmployeesController : Controller
     {
         private LocalDataContext db = new LocalDataContext();
+
+        public async Task<ActionResult> DeleteDependent(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var dependent = await db.Dependents.FindAsync(id);
+
+            if (dependent == null)
+            {
+                return HttpNotFound();
+            }
+
+            db.Dependents.Remove(dependent);
+            await db.SaveChangesAsync();
+            return RedirectToAction($"Details/{dependent.EmployeeId}");
+        }
+
+        public async Task<ActionResult> EditDependent(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var dependent = await db.Dependents.FindAsync(id);
+
+            if (dependent == null)
+            {
+                return HttpNotFound();
+            }
+
+            ViewBag.RelationId = new SelectList(await this.GetRelations(), "RelationId", "Name", dependent.RelationId);
+            return View(dependent);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> EditDependent(Dependent dependent)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(dependent).State = EntityState.Modified;
+                await db.SaveChangesAsync();
+                return RedirectToAction($"Details/{dependent.EmployeeId}");
+            }
+
+            ViewBag.RelationId = new SelectList(await this.GetRelations(), "RelationId", "Name", dependent.RelationId);
+            return View(dependent);
+        }
+
+        public async Task<ActionResult> AddDependent(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var employee = await db.Employees.FindAsync(id);
+
+            if (employee == null)
+            {
+                return HttpNotFound();
+            }
+
+            ViewBag.RelationId = new SelectList(await this.GetRelations(), "RelationId", "Name");
+            var view = new Dependent
+            {
+                EmployeeId = employee.EmployeeId,
+            };
+
+            return View(view);
+        }
+
+        private async Task<List<Relation>> GetRelations()
+        {
+            var relations = await db.Relations.OrderBy(r => r.Name).ToListAsync();
+            relations.Insert(0, new Relation
+            {
+                RelationId = 0,
+                Name = "[Seleccione una relación...]",
+            });
+
+            return relations;
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> AddDependent(Dependent dependent)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Dependents.Add(dependent);
+                await db.SaveChangesAsync();
+                return RedirectToAction($"Details/{dependent.EmployeeId}");
+            }
+
+            ViewBag.RelationId = new SelectList(await this.GetRelations(), "RelationId", "Name", dependent.RelationId);
+            return View(dependent);
+        }
 
         // GET: Employees
         [Authorize(Roles = "View, Admin")]
