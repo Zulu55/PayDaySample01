@@ -195,7 +195,6 @@
                             errors += $"- Property: \"{ve.PropertyName}\", Error: \"{ve.ErrorMessage}\"";
                         }
                     }
-                    throw;
                 }
 
                 return RedirectToAction("Index");
@@ -315,7 +314,22 @@
             }
 
             db.Employees.Remove(employee);
-            await db.SaveChangesAsync();
+            try
+            {
+                await db.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message.Contains("DELETE"))
+                {
+                    ModelState.AddModelError(string.Empty, "No se puede borrar empleado, porque tiene registros relacionados.");
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, ex.Message);
+                }
+            }
+
             return RedirectToAction("Index");
         }
 

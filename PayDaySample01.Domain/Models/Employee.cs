@@ -34,7 +34,6 @@ namespace PayDaySample01.Domain.Models
         public string PicturePath { get; set; }
 
         [Display(Name = "Fecha contratación")]
-        [DataType(DataType.Date)]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
         public DateTime HireIn { get; set; }

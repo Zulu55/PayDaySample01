@@ -9,6 +9,7 @@
 <p>
     @Html.ActionLink("Nuevo", "Create", new { }, new { @class = "btn btn-primary" })
 </p>
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
 <table class="table">
     <tr>
         <th>
@@ -41,44 +42,45 @@
         <th width="230px"></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.City.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Document)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FullName)
-        </td>
-        <td>
-            @if (!string.IsNullOrEmpty(item.PicturePath))
-            {
-                <img src="@Url.Content(item.PicturePath)" alt="Image" style="width:100px;height:150px;max-width: 100%; height: auto;" />
-            }
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.HireIn)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Salary)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.HasChildren)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Dependents.Count)
-        </td>
-        <td>
-            @Html.ActionLink("Editar", "Edit", new { id = item.EmployeeId }, new { @class = "btn btn-warning" })
-            @Html.ActionLink("Detalles", "Details", new { id = item.EmployeeId }, new { @class = "btn btn-info" })
-            @Html.ActionLink("Borrar", "Delete", new { id = item.EmployeeId }, new { @class = "btn btn-danger", onclick = "return confirm('¿Está seguro de borrar el registro?')" })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.City.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Document)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FullName)
+            </td>
+            <td>
+                @if (!string.IsNullOrEmpty(item.PicturePath))
+                {
+                    <img src="@Url.Content(item.PicturePath)" alt="Image" style="width:100px;height:150px;max-width: 100%; height: auto;" />
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HireIn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Salary)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HasChildren)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Dependents.Count)
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Edit", new { id = item.EmployeeId }, new { @class = "btn btn-warning" })
+                @Html.ActionLink("Detalles", "Details", new { id = item.EmployeeId }, new { @class = "btn btn-info" })
+                @Html.ActionLink("Borrar", "Delete", new { id = item.EmployeeId }, new { @class = "btn btn-danger", onclick = "return confirm('¿Está seguro de borrar el registro?')" })
+            </td>
+        </tr>
+    }
 
 </table>
