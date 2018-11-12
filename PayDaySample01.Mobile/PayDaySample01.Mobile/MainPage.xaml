@@ -1,8 +1,9 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:PayDaySample01.Mobile"
-             x:Class="PayDaySample01.Mobile.MainPage">
+             x:Class="PayDaySample01.Mobile.MainPage"
+             Title="Login">
 
     <StackLayout
         Padding="5">
@@ -19,7 +20,12 @@
             Placeholder="Ingrese su contraseña..."
             x:Name="Password">
         </Entry>
+        <ActivityIndicator
+            x:Name="ActivityIndicator">
+        </ActivityIndicator>
+       
         <Button
+            Clicked="Handle_Clicked"
             BorderRadius="23"
             HeightRequest="46"
             TextColor="White"
