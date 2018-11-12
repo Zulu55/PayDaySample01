@@ -1,4 +1,5 @@
-﻿using PayDaySample01.Domain.Models;
+﻿using Newtonsoft.Json;
+using PayDaySample01.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -15,6 +16,7 @@ namespace PayDaySample01.Domain.Models
 
         public int EmployeeId { get; set; }
 
+        [JsonIgnore]
         public virtual Employee Employee { get; set; }
 
         [Display(Name = "Horas Trabajadas")]

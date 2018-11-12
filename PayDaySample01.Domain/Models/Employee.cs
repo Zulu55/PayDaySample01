@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -46,6 +47,7 @@ namespace PayDaySample01.Domain.Models
         [Display(Name = "¿Tiene hijos?")]
         public bool HasChildren { get; set; }
 
+        [JsonIgnore]
         public virtual City City { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
@@ -54,10 +56,13 @@ namespace PayDaySample01.Domain.Models
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
+        [JsonIgnore]
         public virtual ICollection<RecordTime> RecordTimes { get; set; }
 
+        [JsonIgnore]
         public virtual ICollection<CalculatedSalary> CalculatedSalaries { get; set; }
 
+        [JsonIgnore]
         public virtual ICollection<Dependent> Dependents { get; set; }
 
         [Display(Name = "Nombres y Apellidos")]

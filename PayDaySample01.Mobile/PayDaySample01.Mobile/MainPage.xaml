@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:PayDaySample01.Mobile"
+             x:Class="PayDaySample01.Mobile.MainPage">
+
+    <StackLayout
+        Padding="5">
+        <Image
+            Source="payday25">
+        </Image>
+        <Entry
+            x:Name="Email"
+            Keyboard="Email"
+            Placeholder="Ingrese su email...">
+        </Entry>
+        <Entry
+            IsPassword="True"
+            Placeholder="Ingrese su contraseña..."
+            x:Name="Password">
+        </Entry>
+        <Button
+            BorderRadius="23"
+            HeightRequest="46"
+            TextColor="White"
+            BackgroundColor="Navy"
+            Text="Ingresar"
+            x:Name="Login">
+        </Button>
+    </StackLayout>
+
+</ContentPage>

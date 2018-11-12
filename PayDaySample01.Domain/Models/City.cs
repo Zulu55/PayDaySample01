@@ -13,7 +13,7 @@ namespace PayDaySample01.Domain.Models
         public int CityId { get; set; }
 
         [Display(Name = "País")]
-        public int CountryId { get; set; }
+        public int? CountryId { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         [Display(Name = "Ciudad")]
